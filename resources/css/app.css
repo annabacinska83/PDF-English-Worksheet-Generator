@@ -1,11 +1,359 @@
-@import 'tailwindcss';
+@import "bootstrap/dist/css/bootstrap.min.css";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+:root {
+    --dark: #1e1e1e;
+    --dark-l: #252526;
+    --dark-ll: #2d2d30;
+    --dark-lll: #3e3e42;
+    --light-d: #efeeee;
+    --light-dd:  #929292;
+    --off-white: #FAF9F6;
+}
+/* transition */
+#mainNav,
+#mainNav *{
+    transition: background-color .25s ease, color .25s ease;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* scrolled */
+#mainNav.navbar-dark {
+    background-color: #000 !important;
+}
+
+#mainNav.navbar-dark *{
+    color: #fff !important;
+}
+/* dropdown menu color */
+#mainNav.navbar-dark .dropdown-menu{
+    background-color: #000000;
+}
+
+#mainNav.navbar-dark #navButton{
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}
+
+
+body {
+    --bg: url("../images/bg_bg.png");
+    padding-top: 60px;
+    min-height: 100vh;
+    background-image: var(--bg);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+.body-white {
+    background-image: none;
+    background-color: white;
+}
+
+.row-hero { min-height: 80vh; }
+.row-preview { min-height: 50vh; }
+.row-question { min-height: 25vh; }
+.row-form { min-height: 80vh; }
+
+
+
+.hero-title {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    line-height: 0.9;
+    letter-spacing: -2px;
+}
+.hero-section {
+    max-width: 10000px;
+}
+
+#textGenerator {
+    position: relative;
+}
+
+#textGenerator::after {
+    position: absolute;
+    content: '';
+    top: 1px;
+    left: -1.8rem;
+    width: 13px;
+    height: 10.47rem;
+    background-color: black;
+}
+
+@media (max-width: 991px) {
+    #textGenerator::after {
+        width: 0;
+        height: 0;
+    }
+}
+
+.generator-row{
+    height: 650px;
+}
+
+.generator-text{
+    max-width: 26rem;
+}
+
+.gradient-block{
+    background-image: url("../images/gradient.png");
+    background-size: cover;
+
+}
+.generator-prompt{
+    max-width: 26rem;
+    position: relative;
+}
+
+.container-question{
+    height: 25rem;
+}
+
+.h1-question{
+    font-size: 4.5rem;
+}
+
+/*Form for the main prompt*/
+/* Form text */
+.text-prompt {
+    color: var(--off-white);
+}
+
+.prompt-form-card {
+    background-color: var(--dark);
+}
+
+
+
+.form-shell {
+    background: var(--dark);
+    border-color: var(--dark-lll);
+}
+
+.form-dark {
+    background: var(--dark-ll);
+    border-color: var(--dark-lll);
+    color: var(--off-white);
+}
+
+.form-dark::placeholder {
+    color: rgba(250, 249, 246, 0.65);
+}
+
+.form-dark:focus {
+    background: var(--dark-l);
+    border-color: var(--dark-lll);
+    color: var(--off-white);
+    box-shadow: none;
+}
+
+.bg-circle{
+    background: url("../images/circle_gr.png") center/600px no-repeat;
+}
+.circle-side{
+    position: relative;
+    min-height: 150px;
+    overflow: hidden;
+}
+
+.build-btn {
+    background: var(--off-white);
+    border: 0;
+    color: black;
+    z-index: 1;
+}
+
+.build-btn:hover {
+    background: #5836d1;
+    color: #fff;
+}
+/* Dropdown menu */
+.exercise-type-dropdown .dropdown-menu {
+    background-color: var(--dark-l);
+    border: 1px solid rgba(62, 62, 66, 0.8);
+    border-radius: 9px;
+    color: var(--off-white);
+}
+
+/* Dropdown items */
+.exercise-type-dropdown .dropdown-item,
+.exercise-type-dropdown .dropdown-item span,
+.exercise-type-dropdown label {
+    color: var(--off-white);
+}
+
+
+#exerciseTypeMenu{
+    background-color: var(--dark);
+    border-color: var(--dark-lll);
+}
+
+/* Checkbox */
+.form-check-input-dark {
+    background-color: var(--dark);
+    border: 1px solid rgba(62, 62, 66, 0.8);
+    box-shadow: none;
+}
+
+.form-check-input:checked {
+    background-color: #5836d1;
+    border-color: #5836d1;
+}
+
+.form-check-input:focus {
+    border-color: #5836d1;
+    box-shadow: 0 0 0 0.2rem rgba(121, 103, 197, 0.15);
+}
+
+/* Optional: better button text alignment */
+.exercise-type-dropdown .custom-btn {
+    text-align: left;
+}
+
+
+.custom-btn{
+    border: 1px solid #dee2e6;
+}
+.custom-btn:hover {
+    background-color: #dee2e6;
+    cursor: pointer;
+}
+
+.text-typewriter{
+    overflow:hidden;
+    white-space: nowrap;
+    border-right: 1px;
+    animation: typing 3.5s steps(85,start) 12s infinite alternate;
+}
+
+@keyframes typing{
+    0% {
+        width: 0;
+    }
+    60% {
+        width: 100%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.auth-car{
+    width: 100%;
+    max-width: 20rem;
+}
+
+@media(max-width: 576px){
+    body.page-blur{
+        background: white;
+    }
+    body.page-blur.bg-blur::before{
+        display: none;
+    }
+}
+
+
+.auth-wrapper{
+    align-items: stretch;
+}
+
+.custom-muted-text{
+    color : #929292;
+}
+
+.btn-auth{
+    background-color:  #929292;
+}
+
+
+.btn-auth:hover{
+    background-color: #000000;
+
+}
+
+.btn-link {
+    text-decoration: none
+}
+
+.btn-link:hover {
+    text-decoration: underline
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+.bg-error {
+    background-color: #FFCDD2;
+}
+
+.btn.form-dark {
+    background-color: var(--dark-l);
+    border: 1px solid rgba(62, 62, 66, 0.8);
+    border-radius: 9px;
+    color: var(--off-white);
+}
+
+.btn.form-dark:focus {
+    background-color: var(--dark-l);
+    border: 1px solid rgba(62, 62, 66, 0.8);
+    border-radius: 9px;
+    color: var(--off-white);
+}
+
+.dropdown-item.lab {
+    color: var(--off-white);
+}
+
+.dropdown-item.lab:hover {
+    background-color: var(--dark-l);
+}
+
+
+
+.form-control-dark{
+    background-color: var(--dark-l);
+    color: var(--off-white);
+}
+
+.form-control-dark:focus{
+    background-color: var(--dark-l);
+    color: var(--off-white);
+}
+
+.editor-card{
+    background-color: rgba(255, 255, 255, 0.53);
+}
+
+.pdf-header {
+    text-align: center;
+    border-bottom: 1px solid #0a0a0a;
+}
+
+#website-name{
+    float: left;
+}
+
+#wsht-subject{
+    float: right;
+}
+
+#website-logo{
+    float: left;
+    display: block;
+    width: 23px;
+    height: auto;
+    margin-right: 5px;
+}
+.mch-choice-text{
+    padding-left: 15px;
+}
+
+.mtp-col{
+    float: left;
+    width: 50%;
 }

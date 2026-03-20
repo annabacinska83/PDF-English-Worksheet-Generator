@@ -8,11 +8,11 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        tailwindcss(),
     ],
     server: {
-        watch: {
-            ignored: ['**/storage/framework/views/**'],
+        host: true,
+        hmr: {
+            host: 'worksheet_generator.test',
         },
     },
 });
