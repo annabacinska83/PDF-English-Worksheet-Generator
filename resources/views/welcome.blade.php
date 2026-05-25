@@ -1,4 +1,4 @@
-<x-layoutNav>
+<x-layoutNavFooter>
     <main class="d-flex flex-column min-vh-100 grow">
 
         <!-- ROW 1 / HERO -->
@@ -24,9 +24,14 @@
 
                 <div class="row mt-5">
                     <div class="col-12 d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3">
+                        @auth
                         <button type="button" class="btn scroll-btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">
                             Start Building
                         </button>
+                        @endauth
+                            @guest
+                                <a href="{{ route('login') }}" id="guestButton" class="btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">Start building</a>
+                            @endguest
 
                         <small class="text-muted text-center text-sm-start">
                             No credit card required.<br>
@@ -47,10 +52,16 @@
                             Choose a category, set the difficulty level, and describe
                             what you want to practice.
                         </p>
+                        @guest
+                        <a href="{{ route('login') }}" id="guestButton" class="btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">Start building</a>
+                        @endguest
+                        @auth
+                            <button type="button" class="btn scroll-btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">
+                                Start Building
+                            </button>
+                        @endauth
 
-                        <button type="button" class="btn scroll-btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">
-                            Start Building
-                        </button>
+
                     </div>
 
                     <div class="gradient-block col-12 col-lg-7 d-none d-lg-flex p-5 align-items-center justify-content-center">
@@ -74,21 +85,34 @@
                                     <span>Add level</span>
                                 </div>
 
-                                <button type="button" class="btn scroll-btn btn-dark d-flex align-items-center justify-content-center rounded-3 p-0"
-                                        style="width: 44px; height: 44px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                                         class="bi bi-arrow-up" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M8 12a.5.5 0 0 0 .5-.5V3.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 3.707V11.5A.5.5 0 0 0 8 12"/>
-                                    </svg>
-                                </button>
+                                @guest
+                                    <a href="{{ route('login') }}" id="guestButton" class="btn btn-dark d-flex align-items-center justify-content-center rounded-3 p-0"
+                                    style="width: 44px; height: 44px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                             class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 12a.5.5 0 0 0 .5-.5V3.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 3.707V11.5A.5.5 0 0 0 8 12"/>
+                                        </svg>
+                                    </a>
+                                @endguest
+                                @auth
+                                    <button type="button" class="btn scroll-btn btn-dark d-flex align-items-center justify-content-center rounded-3 p-0"
+                                            style="width: 44px; height: 44px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                             class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 12a.5.5 0 0 0 .5-.5V3.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 3.707V11.5A.5.5 0 0 0 8 12"/>
+                                        </svg>
+                                    </button>
+                                @endauth
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        @auth
         <!-- ROW 3 / QUESTION -->
         <section class="container-question row-question py-5 d-flex align-items-center justify-content-center">
             <div class="container text-center">
@@ -103,21 +127,20 @@
             <div class="container py-5">
                 <div class="form-shell rounded-5 shadow-sm p-4 p-lg-5 mx-auto">
                     <div class="bg-circle">
-                    <form method="POST" action="{{ route('show.editor') }}" class="row g-4 g-lg-5 align-items-stretch">
+                    <form id="welcome-form" method="POST" action="{{ route('show.editor') }}" class="row g-4 g-lg-5 align-items-stretch">
                         @csrf
                         <div class="col-12 col-lg-6">
                             <div class="row g-4  py-4">
                                 <div class="col-12">
                                     <label for="wsht-name" class="form-label text-light">Name of the worksheet</label>
-                                    <div>
-                                        <input
-                                            id="wsht-name"
-                                            name="wsht-name"
-                                            class="form-control form-dark"
-                                            placeholder="Write a message"
-                                            autocomplete="off"
-                                        >
-                                    </div>
+                                    <input
+                                        id="wsht-name"
+                                        name="wsht-name"
+                                        value="{{ old("wsht-name") }}"
+                                        class="form-control form-dark"
+                                        placeholder="Write a message"
+                                        autocomplete="off"
+                                    >
                                 </div>
 
                                 <div class="col-12">
@@ -125,6 +148,7 @@
                                     <input
                                         id="wsht-theme"
                                         name="wsht-theme"
+                                        value="{{ old("wsht-theme") }}"
                                         class="form-control form-dark"
                                         placeholder="Write a message"
                                         autocomplete="off"
@@ -134,14 +158,14 @@
                                 <div class="col-12">
                                     <div class="row g-3">
                                         <div class="col-12 col-sm-4">
-                                            <label for="grade" class="form-label text-light">Grade</label>
-                                            <select id="grade" name="grade" class="form-select form-dark">
+                                            <label for="level" class="form-label text-light">Level</label>
+                                            <select id=level" name="wsht-level" class="form-select form-dark">
                                                 @php
-                                                    $grades = ['1st', '2nd', '3rd', '4th', '5th'];
+                                                    $levels = ['Elementary', 'Beginner', 'Pre-intermediate', 'Intermediate', 'Advanced'];
                                                 @endphp
-                                                <option selected disabled>Value</option>
-                                                @for($i = 0; $i < sizeof($grades); $i++)
-                                                    <option value="{{ $i + 1 }}">{{ $grades[$i] }} grade</option>
+                                                <option {{ old('wsht-level') === null ? 'selected' : '' }} disabled>Level</option>
+                                                @for($i = 0; $i < sizeof($levels); $i++)
+                                                    <option {{ old('wsht-level') == $levels[$i] ? 'selected' : '' }} value="{{ $levels[$i] }}">{{ $levels[$i] }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -187,26 +211,34 @@
                                         <label class="form-check-label text-light" for="task3">Match the pairs</label>
                                     </div>
 
-                                    <input type="number" class="form-control form-control-dark" name="match-the-pairs-questions" id="qty4" min="1" max="15" value="1" disabled
+                                    <input type="number" class="form-control form-control-dark" name="match-the-pairs-questions" id="qty4" min="2" max="15" value="2" disabled
                                            style="max-width: 60px;">
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="circle-side d-flex justify-content-center align-items-center">
-                            <button type="submit" class="btn build-btn rounded-pill px-4 px-lg-5 py-3">
+                        <div class="circle-side d-flex justify-content-center align-items-center">
+                            <button type="submit" id="submitWorksheetBtn" class="btn build-btn rounded-pill px-4 px-lg-5 py-3">
                                 Generate a worksheet
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671"/>
                                 </svg>
                             </button>
                         </div>
+                        @if ($errors->any())
+                            <ul class="bg-error px-4 py-2 rounded-3 list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li class=" my-2 text-danger">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <script>
+                                window.scrollTo(0, 1850);
+                            </script>
+                        @endif
                     </form>
                     </div>
                 </div>
             </div>
         </section>
-
-
+        @endauth
     </main>
-</x-layoutNav>
+</x-layoutNavFooter>

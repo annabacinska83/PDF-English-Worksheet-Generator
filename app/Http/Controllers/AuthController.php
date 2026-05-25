@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -31,8 +32,6 @@ class AuthController extends Controller
         // Combine first and last name into name field
         $validated['name'] = $validated['name'] . ' ' . $validated['surname'];
 
-        // Hash the password explicitly before creating the user
-        $validated['password'] = Hash::make($validated['password']);
 
         $user = User::create([
             'name' => $validated['name'],
@@ -61,7 +60,7 @@ class AuthController extends Controller
         }
 
 
-        throw \Illuminate\Validation\ValidationException::withMessages([
+        throw ValidationException::withMessages([
             'credentials' => 'Sorry, invalid credentials, try again.',
         ]);
     }

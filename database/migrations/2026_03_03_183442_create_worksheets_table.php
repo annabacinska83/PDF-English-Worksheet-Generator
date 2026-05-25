@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('worksheets', function (Blueprint $table) {
-            $table->id('worksheet_id');
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
-            $table->string('category');
+            $table->string('theme');
+            $table->string('level');
             $table->timestamps();
         });
     }

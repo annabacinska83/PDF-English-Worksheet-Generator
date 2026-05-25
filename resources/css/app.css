@@ -44,12 +44,21 @@ body {
     background-position: top center;
     background-repeat: no-repeat;
 }
-
-.body-white {
-    background-image: none;
-    background-color: white;
+body.body-blur {
+    padding-top: 60px;
+    min-height: 100vh;
+    position: relative;
 }
 
+body.body-blur::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("../images/bg_bg.png") top center / cover no-repeat;
+    filter: blur(8px);
+    transform: scale(1.05);
+    z-index: -1;
+}
 .row-hero { min-height: 80vh; }
 .row-preview { min-height: 50vh; }
 .row-question { min-height: 25vh; }
@@ -98,7 +107,11 @@ body {
 .gradient-block{
     background-image: url("../images/gradient.png");
     background-size: cover;
+}
 
+.gradient-rectangle{
+    background-image: url("../images/gradient_rectangle.png");
+    background-size: cover;
 }
 .generator-prompt{
     max-width: 26rem;
@@ -122,8 +135,6 @@ body {
 .prompt-form-card {
     background-color: var(--dark);
 }
-
-
 
 .form-shell {
     background: var(--dark);
@@ -313,8 +324,6 @@ a:hover {
     background-color: var(--dark-l);
 }
 
-
-
 .form-control-dark{
     background-color: var(--dark-l);
     color: var(--off-white);
@@ -356,4 +365,30 @@ a:hover {
 .mtp-col{
     float: left;
     width: 50%;
+}
+
+.box {
+    width: 100%;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.box td {
+    text-align: center;
+}
+
+.mtp-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.mtp-cell {
+    width: 50%;
+    vertical-align: top;
+    padding: 0 20px 0 0;
+}
+
+.mtp-cell p {
+    margin: 0 0 12px 0;
 }

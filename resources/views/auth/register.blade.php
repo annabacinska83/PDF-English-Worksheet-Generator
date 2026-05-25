@@ -1,21 +1,5 @@
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Worksheet generator</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/bootstrap.js'])
-</head>
-<body class="login-page">
+<x-layoutNav body-class="body-blur">
 <div class="bg-blur-overlay d-none d-sm-block"></div>
-
-<!-- Button to HOMEPAGE -->
-<a class ="btn btn-link text-dark p-0 d-flex align-items-center gap-2 position-fixed top-0 start-0 m-4" href='/' style="z-index: 1050;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-    </svg>
-    <span class="text-uppercase fw-semibold">Home</span>
-</a>
-
 <div class="d-flex align-items-center justify-content-center px-3 py-2 position-relative z-1">
     <div class="container">
         <div class="row justify-content-center">
@@ -106,7 +90,7 @@
 
                     <!--Text log in-->
                     <div class="text-center">
-                        <small>Already have an account? <a href="#" class="fw-bold">Log In</a></small>
+                        <small>Already have an account? <a href="{{ route('show.login') }}" class="fw-bold">Log In</a></small>
                     </div>
 
                 </div>
@@ -114,7 +98,5 @@
         </div>
     </div>
 </div>
-</body>
-</html>
-
+</x-layoutNav>
 

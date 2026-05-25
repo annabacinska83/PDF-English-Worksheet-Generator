@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('multiple_choices', function (Blueprint $table) {
-            $table->id('exercise_id');
-            $table->foreignId('worksheet_id')->constrained('worksheets', 'worksheet_id')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('worksheet_id')->constrained()->onDelete('cascade');
             $table->string('content');
             $table->timestamps();
         });

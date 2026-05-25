@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded",() => {
             e.preventDefault();
 
             window.scrollTo({
-                top: 1650,
+                top: 1810,
                 behavior: "smooth"
             });
         });
@@ -95,8 +95,17 @@ document.addEventListener("DOMContentLoaded",() => {
 
 
     const fillInTheBlanksTextarea = document.getElementById('fillInTheBlanksTextarea');
+
     if (fillInTheBlanksTextarea) {
-        fillInTheBlanksTextarea.addEventListener('input', function () {
+        function checkTextareaHeight(){
+            fillInTheBlanksTextarea.style.height = 'auto';
+            const textareaHeight = fillInTheBlanksTextarea.scrollHeight;
+            fillInTheBlanksTextarea.style.height = textareaHeight + 'px';
+        }
+        checkTextareaHeight();
+        fillInTheBlanksTextarea.addEventListener('input',checkTextareaHeight);
+
+        function checkFITBTextarea(){
             const textareaValue = fillInTheBlanksTextarea.value;
             const regex = /\[(.*?)\]/g;
 
@@ -148,18 +157,76 @@ document.addEventListener("DOMContentLoaded",() => {
             } else {
                 spanForOptions.innerHTML = "";
             }
+        }
+
+        fillInTheBlanksTextarea.addEventListener('input', checkFITBTextarea);
+        checkFITBTextarea();
+    }
+
+    const welcomeForm = document.getElementById('welcome-form');
+    if(welcomeForm) {
+        function checkInput(e, inputName, elementName, lengthLimit){
+            const input = document.getElementById(inputName);
+
+            let error= '';
+
+            if(!input || input.value === '') {
+                error = elementName +  " can't be empty";
+            } else if (input.value.length >= lengthLimit) {
+                error = elementName +  " can't be longer than " + lengthLimit + " characters.";
+            } else if (hasSpecialChar(input.value)) {
+                error = elementName + " can't have special characters";
+            }
+
+            if (error !== '') {
+                e.preventDefault();
+                const closestDiv = input.closest("div");
+                const div = document.createElement("div");
+                closestDiv.appendChild(div);
+                div.className = "inputError d-flex";
+                div.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"red\" class=\"bi bi-exclamation-circle mt-1 me-1\" viewBox=\"0 0 16 16\">" +
+                    "<path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16\"/>" +
+                    "<path d=\"M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z\"/>" +
+                    "</svg>";
+                div.innerHTML += "<p class='text-danger'>" + error + "</p>";
+            }
+
+            function hasSpecialChar(text) {
+                return /[!@#$%^&*()+=\[\]{};':"\\|,.<>\/?]/.test(text);
+            }
+        }
+
+        welcomeForm.addEventListener('submit', function(e) {
+            welcomeForm.querySelectorAll('.inputError').forEach(element => element.innerHTML = '');
+            checkInput(e,"wsht-name","Name",30);
+            checkInput(e,"wsht-theme","Topic",50);
         });
     }
+});
 
-    const usersTable = document.getElementById("usersTable");
-    if (usersTable) {
-        document.body.classList.add("body-white");
+// Archive search
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        const table = document.querySelectorAll('table tr.content-row');
+
+        searchInput.addEventListener('input', function() {
+           table.forEach(row=> {
+               let rowContent = '';
+
+               row.querySelectorAll('.search-td').forEach(content => {
+                   rowContent += content.innerText.toLowerCase() + ' ';
+               });
+
+               if (rowContent.includes(searchInput.value.toLowerCase())) {
+                   row.classList.remove('d-none');
+               } else {
+                   row.classList.add('d-none');
+               }
+            });
+        });
 
     }
-
-    const navBar = document.getElementById('mainNav');
-    navBar.classList.remove('fixed-top');
-    document.body.style.paddingTop = '0';
 });
 
 

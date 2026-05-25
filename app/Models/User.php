@@ -12,14 +12,12 @@ use Illuminate\Notifications\Notifiable;
 /**
  * @method static create(array $validated)
  * @method static findOrFail(mixed $id)
+ * @method static orderByRaw(string $string)
  */
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
-
-    // Set the custom primary key used by the users table
-    protected $primaryKey = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -44,17 +42,14 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+     * @var array<string, string> */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'admin' => 'boolean',
-
     ];
 
-    public function worksheet() : HasMany
+    public function worksheets() : HasMany
     {
         return $this->hasMany(Worksheet::class);
     }
