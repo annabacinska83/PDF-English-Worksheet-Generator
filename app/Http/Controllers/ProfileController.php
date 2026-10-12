@@ -30,6 +30,8 @@ class ProfileController extends Controller
             $worksheets = Worksheet::all();
         }
 
+        $worksheets = $worksheets->where('user_id', $request->user()->id);
+
         return view('pages.archive', compact('worksheets'));
     }
 

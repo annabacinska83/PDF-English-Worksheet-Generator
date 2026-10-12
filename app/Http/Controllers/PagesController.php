@@ -19,6 +19,8 @@ class PagesController extends Controller
     public function admin(Request $request) {
         $data = $request->all();
 
+        //tu mame SQL injection :P
+
         if (isset($data['order'])) {
             if($data['order'] === 'date') {
                 $users = User::orderByRaw('created_at DESC')->get();
@@ -31,7 +33,6 @@ class PagesController extends Controller
         return view('pages.admin', compact('users'));
     }
 
-    //TODO:User moze odstranit svoj profil
     public function delete(Request $request) {
         $data = $request->validate([
             'id' => 'required|integer|exists:users,id'

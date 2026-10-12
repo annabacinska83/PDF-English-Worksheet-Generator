@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 
 class WorksheetController extends Controller
 {
-    public function generateMultipleChoice(string $englishLevel, string $topic, int $numOfQuestions, int $numOfOptions)
+    private function generateMultipleChoice(string $englishLevel, string $topic, int $numOfQuestions, int $numOfOptions)
     {
         try {
             $systemPrompt = <<<SYSPROMPT
@@ -60,7 +60,7 @@ class WorksheetController extends Controller
         }
     }
 
-    public function generateMatchThePairs(string $englishLevel, string $topic, int $numOfPairs)
+    private function generateMatchThePairs(string $englishLevel, string $topic, int $numOfPairs)
     {
         try {
             $systemPrompt = <<<SYSPROMPT
@@ -104,7 +104,7 @@ class WorksheetController extends Controller
         }
     }
 
-    public function generateFillInTheBlanks(string $englishLevel, string $topic, int $numOfBlanks)
+    private function generateFillInTheBlanks(string $englishLevel, string $topic, int $numOfBlanks)
     {
         try {
             $systemPrompt = <<<SYSPROMPT
@@ -216,86 +216,6 @@ class WorksheetController extends Controller
 
         return view('pages.editor', compact('data'));
     }
-
-//    public function generateWorksheet(Request $request)
-//    {
-//        $data = $request->validate([
-//            'wsht-name' => 'required|string',
-//            'wsht-theme' => 'required|string',
-//            'wsht-level' => 'required|string',
-//            'multiple-choice' => 'nullable|string',
-//            'fill-in-the-blanks' => 'nullable|string',
-//            'match-the-pairs' => 'nullable|string',
-//            'multiple-choice-questions' => 'nullable|integer',
-//            'multiple-choice-choices' => 'nullable|integer',
-//            'fill-in-the-blanks-questions' => 'nullable|integer',
-//            'match-the-pairs-questions' => 'nullable|integer',
-//        ]);
-//
-//        if (isset($data['fill-in-the-blanks']) && isset($data['fill-in-the-blanks-questions'])) {
-//            $fillInTheBlanks = $this->generateFillInTheBlanks($data['wsht-level'], $data['wsht-theme'], $data['fill-in-the-blanks-questions']);
-//
-//            if ($fillInTheBlanks === null) {
-//                return view('pages.editor', compact('data'))->with('error', 'Error while generating the worksheet.');
-//            }
-//
-//            $data['fintb-text'] = $fillInTheBlanks;
-//        }
-//
-//        if (isset($data['match-the-pairs']) && isset($data['match-the-pairs-questions'])) {
-//            $matchThePairs = $this->generateMatchThePairs($data['wsht-level'], $data['wsht-theme'], $data['match-the-pairs-questions']);
-//
-//            if ($matchThePairs === null) {
-//                return view('pages.editor', compact('data'))->with('error', 'Error while generating the worksheet.');
-//            }
-//
-//            $rawPairs = explode(",", $matchThePairs);
-//
-//            for($i = 0; $i < count($rawPairs); $i++) {
-//                $pair = explode(':', $rawPairs[$i]);
-//
-//                if(sizeof($pair) == 2) {
-//                    $data['mtp_lp_' . $i] = trim($pair[0]);
-//                    $data['mtp_rp_' . $i] = trim($pair[1]);
-//                    $data['match_the_pairs_' . $i] = true;
-//                }
-//            }
-//        }
-//
-//        if (isset($data['multiple-choice']) && isset($data['multiple-choice-choices']) && isset($data['multiple-choice-questions'])) {
-//            $multipleChoice = $this->generateMultipleChoice($data['wsht-level'], $data['wsht-theme'], $data['multiple-choice-questions'], $data['multiple-choice-choices']);
-//
-//            if ($multipleChoice === null) {
-//                return view('pages.editor', compact('data'))->with('error', 'Error while generating the worksheet.');
-//            }
-//
-//            //$data['test'] = $multipleChoice;
-//
-//            $rawMCQs = explode(";" , $multipleChoice);
-//
-//            // kontrola ci posledny prvok explodu je prazdny
-//            $numOfMCQs = empty($rawMCQs[count($rawMCQs) - 1]) ? count($rawMCQs) - 1 : count($rawMCQs);
-//
-//            for ($i = 0; $i < $numOfMCQs; $i++) {
-//                $MCQuestionAndOptions = explode(':', $rawMCQs[$i]);
-//                $data['mch_question_' . $i + 1] = trim($MCQuestionAndOptions[0]);
-//                $optionsArray = [];
-//
-//                for ($j = 1; $j < count($MCQuestionAndOptions); $j++) {
-//                    $optionsArray[] = ['option'=> trim($MCQuestionAndOptions[$j]), 'checked' => $j == 1 ? "checked" : ""];
-//                }
-//
-//                shuffle($optionsArray);
-//
-//                for ($j = 1; $j < count($MCQuestionAndOptions); $j++) {
-//                    $data['mch_choice_text_' . $i + 1 . '_' . $j - 1] = $optionsArray[$j - 1]['option'];
-//                    $data['mch_choice_checkbox_' . $i + 1 . '_' . $j - 1] = $optionsArray[$j - 1]['checked'];
-//                }
-//            }
-//        }
-//
-//        return view('pages.editor', compact('data'));
-//    }
 
     private function handleMultipleChoice(array &$data)
     {

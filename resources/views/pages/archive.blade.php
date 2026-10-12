@@ -84,7 +84,7 @@
                         @php
                             $number = 1;
                         @endphp
-                        @foreach($worksheets as $worksheet )
+                        @foreach($worksheets as $worksheet)
                             <tr class="content-row">
                                 <th scope="row">{{ $number++ }}</th>
                                 <td class="search-td">{{ $worksheet->title }}</td>
